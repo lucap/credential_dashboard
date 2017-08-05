@@ -1,10 +1,14 @@
 class Dashboard extends React.Component {
 
+
+
     render () {
         return (
-            <MainMenu/>
-            <CredentialList/>
-            <CredentialDetails/>
+            <div className={'Dashboard'}>
+                <MainMenu/>
+                <CredentialList/>
+                <CredentialDetails/>
+            </div>
         );
     }
 
@@ -13,7 +17,12 @@ class Dashboard extends React.Component {
 class MainMenu extends React.Component {
 
     render () {
-        return null
+        return (
+            <div className={'MainMenu'}>
+                <div>My Credentials</div>
+                <div>Shared with Me</div>
+            </div>
+        );
     }
 
 }
@@ -21,7 +30,12 @@ class MainMenu extends React.Component {
 class CredentialList extends React.Component {
 
     render () {
-        return null
+        return (
+            <div className={'CredentialList'}>
+                <div>amanzon.com</div>
+                <div>netflix</div>
+            </div>
+        );
     }
 
 }
@@ -29,20 +43,27 @@ class CredentialList extends React.Component {
 class CredentialDetails extends React.Component {
 
     render () {
-        return null
+        return (
+            <div className={'CredentialDetails'}>
+                <div>amazon.com</div>
+                <div>username</div>
+                <div>password</div>
+            </div>
+        );
     }
 
 }
 
+// load the initial data
 axios.get('/data/initial_data.json')
   .then(function (response) {
-    console.log(response);
+    ReactDOM.render(
+        <Dashboard
+            data={response}
+        />,
+        document.getElementById('root')
+    );
   })
   .catch(function (error) {
     console.log(error);
   });
-
-ReactDOM.render(
-    <Dashboard/>,
-    document.getElementById('root')
-);
