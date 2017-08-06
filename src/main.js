@@ -47,13 +47,9 @@ class Dashboard extends React.Component {
                     credentials={data[selectedMenu]}
                     onSelectedCredential={this.onSelectedCredential}
                 />
-                {
-                    selectedCredential
-                    ? <CredentialDetails
-                        selectedCredential={selectedCredential}
-                    />
-                    : null
-                }
+                <CredentialDetails
+                    selectedCredential={selectedCredential}
+                />
 
             </div>
         );
@@ -111,7 +107,7 @@ class CredentialList extends React.Component {
                             onClick={this.onClick}
                             className={'CredentialList__item'}
                         >
-                            <div className={'CredentialList__website'}>{credentials.website}</div>
+                            <div className={'website_title'}>{credentials.website}</div>
                             <div>{credentials.username}</div>
                             {
                                 credentials.borrower_user_id
@@ -130,11 +126,23 @@ class CredentialList extends React.Component {
 class CredentialDetails extends React.Component {
 
     render () {
+        const {selectedCredential} = this.props;
+
+        if (!selectedCredential) {
+            return null;
+        }
+
+        const {
+            website,
+            username,
+            lender_user_id,
+            borrower_user_id,
+        } = selectedCredential;
+
         return (
             <div className={'CredentialDetails'}>
-                <div>Mock Data</div>
-                <div>username</div>
-                <div>password</div>
+                <div className={'website_title'}>{website}</div>
+                <div>{username}</div>
             </div>
         );
     }
