@@ -40,6 +40,7 @@ html, body {
 .CredentialList__item {
     padding: 10px;
     cursor: pointer;
+    min-width: 200px;
 }
 
 .CredentialList__item:not(:last-child) {

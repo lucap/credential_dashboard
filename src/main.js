@@ -10,7 +10,7 @@ class Dashboard extends React.Component {
         this.setState({
             data: this.props.data, // initialize the state with mock data
             selectedMenu: MenuItems[0].id,
-            selectedCredential: null,
+            selectedCredentialIndex: null,
         });
     }
 
@@ -20,9 +20,9 @@ class Dashboard extends React.Component {
         });
     }
 
-    onSelectedCredential = (selectedCredential) => {
+    onSelectedCredential = (index) => {
         this.setState({
-            selectedCredential
+            selectedCredentialIndex: index
         });
     }
 
@@ -30,8 +30,12 @@ class Dashboard extends React.Component {
         const {
             data,
             selectedMenu,
-            selectedCredential,
+            selectedCredentialIndex,
         } = this.state;
+
+        const selectedCredential = selectedCredentialIndex
+            ? data[selectedMenu][selectedCredentialIndex]
+            : null;
 
         return (
             <div className={'Dashboard'}>
@@ -41,9 +45,16 @@ class Dashboard extends React.Component {
                 />
                 <CredentialList
                     credentials={data[selectedMenu]}
-                    selectedCredential={selectedCredential}
+                    onSelectedCredential={this.onSelectedCredential}
                 />
-                <CredentialDetails/>
+                {
+                    selectedCredential
+                    ? <CredentialDetails
+                        selectedCredential={selectedCredential}
+                    />
+                    : null
+                }
+
             </div>
         );
     }
@@ -83,6 +94,12 @@ class MainMenu extends React.Component {
 
 class CredentialList extends React.Component {
 
+    onClick = (e) => {
+        this.props.onSelectedCredential(
+            e.currentTarget.dataset.id
+        );
+    }
+
     render () {
         return (
             <div className={'CredentialList'}>
@@ -115,7 +132,7 @@ class CredentialDetails extends React.Component {
     render () {
         return (
             <div className={'CredentialDetails'}>
-                <div>amazon.com</div>
+                <div>Mock Data</div>
                 <div>username</div>
                 <div>password</div>
             </div>
