@@ -248,7 +248,7 @@ const mungeData = (data) => {
 }
 
 // load the initial data
-axios.get('/data/initial_data.json')
+axios.get('data/initial_data.json')
   .then(function (response) {
     ReactDOM.render(
         <Dashboard
