@@ -27,6 +27,22 @@ class Dashboard extends React.Component {
         });
     }
 
+    onShareInput = (value) => {
+        const {
+            data,
+            selectedMenu,
+            selectedCredentialIndex,
+        } = this.state;
+
+        const _data = _.cloneDeep(data);
+        _data[selectedMenu][selectedCredentialIndex].borrower_user_id = value;
+
+        this.setState({
+            data: _data,
+        })
+
+    }
+
     onDelete = () => {
         const {
             data,
@@ -68,6 +84,8 @@ class Dashboard extends React.Component {
                     selectedCredential={selectedCredential}
                     isDeletable={selectedMenu === 'own_credentials'}
                     onDelete={this.onDelete}
+                    isSharable={selectedMenu === 'own_credentials'}
+                    onShareInput={this.onShareInput}
                 />
 
             </div>
@@ -153,11 +171,16 @@ class CredentialList extends React.Component {
 
 class CredentialDetails extends React.Component {
 
+    onShareInput = (e) => {
+        this.props.onShareInput(e.target.value);
+    }
+
     render () {
         const {
             selectedCredential,
             isDeletable,
             onDelete,
+            isSharable,
         } = this.props;
 
         if (!selectedCredential) {
@@ -176,9 +199,22 @@ class CredentialDetails extends React.Component {
                 <div className={'website_title'}>{website}</div>
                 <div>{username}</div>
                 {
+                    isSharable
+                    ? <div className={'CredentialDetails_sharing'}>
+                        <label>Share with:</label>
+                        <input
+                            type="text"
+                            value={borrower_user_id || ''}
+                            onChange={this.onShareInput}>
+                        </input>
+                        <div>(Leave blank to stop sharing)</div>
+                    </div>
+                    : null
+                }
+                {
                     isDeletable
                     ? <button
-                        className={'delete-button'}
+                        className={'CredentialDetails__delete-button'}
                         onClick={onDelete}
                     >
                         Delete
@@ -195,6 +231,7 @@ class CredentialDetails extends React.Component {
 const mungeData = (data) => {
     // merge shared_with_others into own_credentials
     const _data = _.cloneDeep(data);
+
     _data.shared_with_others.map( (shared_credential) => {
         _data.own_credentials.map( (own_credential, index) => {
             if (own_credential.website === shared_credential.website &&
@@ -206,6 +243,7 @@ const mungeData = (data) => {
     })
 
     delete _data.shared_with_others;
+
     return _data;
 }
 

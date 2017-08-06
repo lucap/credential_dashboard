@@ -70,9 +70,23 @@ html, body {
     padding: 10px;
 }
 
-.delete-button {
+.CredentialDetails__delete-button {
     position: absolute;
     bottom: 10px;
     right: 10px;
     font-size: 16px;
+}
+
+.CredentialDetails_sharing {
+    margin-top: 20px;
+}
+
+.CredentialDetails_sharing > div {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.CredentialDetails_sharing > input {
+    margin-left: 5px;
+    font-size: 18px;
 }
