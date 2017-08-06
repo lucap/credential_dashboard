@@ -16,13 +16,30 @@ class Dashboard extends React.Component {
 
     onSelectedMenu = (selectedMenu) => {
         this.setState({
-            selectedMenu
+            selectedMenu,
+            selectedCredentialIndex: null,
         });
     }
 
     onSelectedCredential = (index) => {
         this.setState({
             selectedCredentialIndex: index
+        });
+    }
+
+    onDelete = () => {
+        const {
+            data,
+            selectedMenu,
+            selectedCredentialIndex,
+        } = this.state;
+
+        const _data = _.cloneDeep(data);
+        _data[selectedMenu].splice(selectedCredentialIndex ,1)
+
+        this.setState({
+            data: _data,
+            selectedCredentialIndex: null,
         });
     }
 
@@ -49,6 +66,8 @@ class Dashboard extends React.Component {
                 />
                 <CredentialDetails
                     selectedCredential={selectedCredential}
+                    isDeletable={selectedMenu === 'own_credentials'}
+                    onDelete={this.onDelete}
                 />
 
             </div>
@@ -97,9 +116,19 @@ class CredentialList extends React.Component {
     }
 
     render () {
+        const {credentials} = this.props;
+
+        if (_.isEmpty(credentials)) {
+            return (
+                <div className={'CredentialList'}>
+                    This list is empty
+                </div>
+            );
+        }
+
         return (
             <div className={'CredentialList'}>
-                {this.props.credentials.map((credentials, index) => {
+                {credentials.map((credentials, index) => {
                     return (
                         <div
                             key={index}
@@ -120,13 +149,16 @@ class CredentialList extends React.Component {
             </div>
         );
     }
-
 }
 
 class CredentialDetails extends React.Component {
 
     render () {
-        const {selectedCredential} = this.props;
+        const {
+            selectedCredential,
+            isDeletable,
+            onDelete,
+        } = this.props;
 
         if (!selectedCredential) {
             return null;
@@ -143,6 +175,17 @@ class CredentialDetails extends React.Component {
             <div className={'CredentialDetails'}>
                 <div className={'website_title'}>{website}</div>
                 <div>{username}</div>
+                {
+                    isDeletable
+                    ? <button
+                        className={'delete-button'}
+                        onClick={onDelete}
+                    >
+                        Delete
+                    </button>
+                    : null
+                }
+
             </div>
         );
     }
