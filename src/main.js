@@ -1,5 +1,5 @@
 const MenuItems = [
-    {id: 'my_credentials', display: 'My Credentials'},
+    {id: 'own_credentials', display: 'My Credentials'},
     {id: 'shared_with_me', display: 'Shared with Me'}
 ]
 
@@ -9,7 +9,7 @@ class Dashboard extends React.Component {
     componentWillMount() {
         this.setState({
             data: this.props.data, // initialize the state with mock data
-            selectedMenu: 'my_credentials',
+            selectedMenu: MenuItems[0].id,
             selectedCredential: null,
         });
     }
@@ -20,14 +20,29 @@ class Dashboard extends React.Component {
         });
     }
 
+    onSelectedCredential = (selectedCredential) => {
+        this.setState({
+            selectedCredential
+        });
+    }
+
     render () {
+        const {
+            data,
+            selectedMenu,
+            selectedCredential,
+        } = this.state;
+
         return (
             <div className={'Dashboard'}>
                 <MainMenu
                     onSelectedMenu={this.onSelectedMenu}
-                    selectedMenu={this.state.selectedMenu}
+                    selectedMenu={selectedMenu}
                 />
-                <CredentialList/>
+                <CredentialList
+                    credentials={data[selectedMenu]}
+                    selectedCredential={selectedCredential}
+                />
                 <CredentialDetails/>
             </div>
         );
@@ -71,8 +86,24 @@ class CredentialList extends React.Component {
     render () {
         return (
             <div className={'CredentialList'}>
-                <div>amanzon.com</div>
-                <div>netflix</div>
+                {this.props.credentials.map((credentials, index) => {
+                    return (
+                        <div
+                            key={index}
+                            data-id={index}
+                            onClick={this.onClick}
+                            className={'CredentialList__item'}
+                        >
+                            <div className={'CredentialList__website'}>{credentials.website}</div>
+                            <div>{credentials.username}</div>
+                            {
+                                credentials.borrower_user_id
+                                ? <div className={'CredentialList__shared'}>Shared</div>
+                                : null
+                            }
+                        </div>
+                    );}
+                )}
             </div>
         );
     }

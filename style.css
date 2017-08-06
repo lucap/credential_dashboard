@@ -2,6 +2,7 @@ html, body {
     padding: 0;
     margin: 0;
     font-family: Helvetica;
+    font-size: 16px;
 }
 
 .Dashboard {
@@ -28,5 +29,32 @@ html, body {
 
 .MainMenu .selected {
     background-color: gray;
+    border-radius: 3px;
 }
 
+.CredentialList {
+    background-color: lightgray;
+    padding: 10px;
+}
+
+.CredentialList__item {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.CredentialList__item:not(:last-child) {
+    border-bottom: 1px solid black;
+}
+
+.CredentialList__website {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.CredentialList__shared  {
+    display: inline-block;
+    color: white;
+    background-color: gray;
+    padding: 5px;
+    border-radius: 3px;
+}
