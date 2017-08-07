@@ -5,6 +5,22 @@ import _ from 'lodash';
 
 import Dashboard from './components/Dashboard';
 
+const main = () => {
+    // load the initial data
+    axios.get('data/initial_data.json')
+      .then(function (response) {
+        ReactDOM.render(
+            <Dashboard
+                data={mungeData(response.data)}
+            />,
+            document.getElementById('root')
+        );
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+}
+
 
 const mungeData = (data) => {
     // merge shared_with_others into own_credentials
@@ -25,16 +41,4 @@ const mungeData = (data) => {
     return _data;
 }
 
-// load the initial data
-axios.get('data/initial_data.json')
-  .then(function (response) {
-    ReactDOM.render(
-        <Dashboard
-            data={mungeData(response.data)}
-        />,
-        document.getElementById('root')
-    );
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+main();
