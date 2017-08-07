@@ -40,11 +40,16 @@ html, body {
 .CredentialList__item {
     padding: 10px;
     cursor: pointer;
-    min-width: 250px;
+    min-width: 280px;
+    box-sizing: border-box;
 }
 
 .CredentialList__item:not(:last-child) {
     border-bottom: 1px solid black;
+}
+
+.CredentialList__item-selected {
+    border-right: 10px solid gray;
 }
 
 .website_title {

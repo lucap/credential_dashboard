@@ -81,6 +81,7 @@ export default class Dashboard extends Component {
                 />
                 <CredentialList
                     credentials={data[selectedMenu]}
+                    selectedCredentialIndex={selectedCredentialIndex}
                     onSelectedCredential={this.onSelectedCredential}
                 />
                 <CredentialDetails
