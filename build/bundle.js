@@ -41271,6 +41271,7 @@ var Dashboard = function (_Component) {
                 }),
                 _react2.default.createElement(_CredentialList2.default, {
                     credentials: data[selectedMenu],
+                    selectedCredentialIndex: selectedCredentialIndex,
                     onSelectedCredential: this.onSelectedCredential
                 }),
                 _react2.default.createElement(_CredentialDetails2.default, {
@@ -41521,6 +41522,10 @@ var _lodash = __webpack_require__(53);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
+var _classnames = __webpack_require__(217);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41557,7 +41562,9 @@ var CredentialList = function (_Component) {
         value: function render() {
             var _this2 = this;
 
-            var credentials = this.props.credentials;
+            var _props = this.props,
+                credentials = _props.credentials,
+                selectedCredentialIndex = _props.selectedCredentialIndex;
 
 
             if (_lodash2.default.isEmpty(credentials)) {
@@ -41572,13 +41579,19 @@ var CredentialList = function (_Component) {
                 'div',
                 { className: 'CredentialList' },
                 credentials.map(function (credentials, index) {
+
+                    var itemClasses = (0, _classnames2.default)({
+                        'CredentialList__item': true,
+                        'CredentialList__item-selected': selectedCredentialIndex == index
+                    });
+
                     return _react2.default.createElement(
                         'div',
                         {
                             key: index,
                             'data-id': index,
                             onClick: _this2.onClick,
-                            className: 'CredentialList__item'
+                            className: itemClasses
                         },
                         _react2.default.createElement(
                             'div',
@@ -41605,6 +41618,61 @@ var CredentialList = function (_Component) {
 }(_react.Component);
 
 exports.default = CredentialList;
+
+/***/ }),
+/* 217 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2016 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				classes.push(classNames.apply(null, arg));
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if (typeof module !== 'undefined' && module.exports) {
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+			return classNames;
+		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {
+		window.classNames = classNames;
+	}
+}());
+
 
 /***/ })
 /******/ ]);
