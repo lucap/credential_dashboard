@@ -5,6 +5,7 @@ import _ from 'lodash';
 
 import Dashboard from './components/Dashboard';
 
+
 const main = () => {
     // load the initial data
     axios.get('data/initial_data.json')

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 
+
 const MenuItems = [
     {id: 'own_credentials', display: 'My Credentials'},
     {id: 'shared_with_me', display: 'Shared with Me'}

@@ -43,7 +43,6 @@ export default class Dashboard extends Component {
         this.setState({
             data: _data,
         })
-
     }
 
     onDelete = () => {
@@ -91,7 +90,6 @@ export default class Dashboard extends Component {
                     isSharable={selectedMenu === 'own_credentials'}
                     onShareInput={this.onShareInput}
                 />
-
             </div>
         );
     }
